@@ -1,94 +1,48 @@
-<?php
+<x-authentication-layout>
+    <h1 class="text-3xl text-gray-800 dark:text-gray-100 font-bold mb-6">{{ __('Create your Account') }}</h1>
+    
+    <!-- Form -->
+    <form method="POST" action="{{ route('register') }}">
+        @csrf
+        <div class="space-y-4">
+            <div>
+                <x-label for="name">{{ __('Full Name') }} <span class="text-red-500">*</span></x-label>
+                <x-input id="name" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            </div>
 
-use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Livewire\Attributes\Layout;
-use Livewire\Volt\Component;
+            <div>
+                <x-label for="email">{{ __('Email Address') }} <span class="text-red-500">*</span></x-label>
+                <x-input id="email" type="email" name="email" :value="old('email')" required />
+            </div>
 
-new #[Layout('components.layouts.auth')] class extends Component {
-    public string $name = '';
-    public string $email = '';
-    public string $password = '';
-    public string $password_confirmation = '';
+            <div>
+                <x-label for="password" value="{{ __('Password') }}" />
+                <x-input id="password" type="password" name="password" required autocomplete="new-password" />
+            </div>
 
-    /**
-     * Handle an incoming registration request.
-     */
-    public function register(): void
-    {
-        $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        $validated['password'] = Hash::make($validated['password']);
-
-        event(new Registered(($user = User::create($validated))));
-
-        Auth::login($user);
-
-        $this->redirect(route('dashboard', absolute: false), navigate: true);
-    }
-}; ?>
-
-<div class="flex flex-col gap-6">
-    <x-auth-header title="Create an account" description="Enter your details below to create your account" />
-
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
-
-    <form wire:submit="register" class="flex flex-col gap-6">
-        <!-- Name -->
-        <div class="grid gap-2">
-            <flux:input wire:model="name" id="name" label="{{ __('Name') }}" type="text" name="name" required autofocus autocomplete="name" placeholder="Full name" />
+            <div>
+                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
+                <x-input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" />
+            </div>
         </div>
-
-        <!-- Email Address -->
-        <div class="grid gap-2">
-            <flux:input wire:model="email" id="email" label="{{ __('Email address') }}" type="email" name="email" required autocomplete="email" placeholder="email@example.com" />
-        </div>
-
-        <!-- Password -->
-        <div class="grid gap-2">
-            <flux:input
-                wire:model="password"
-                id="password"
-                label="{{ __('Password') }}"
-                type="password"
-                name="password"
-                required
-                autocomplete="new-password"
-                placeholder="Password"
-            />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="grid gap-2">
-            <flux:input
-                wire:model="password_confirmation"
-                id="password_confirmation"
-                label="{{ __('Confirm password') }}"
-                type="password"
-                name="password_confirmation"
-                required
-                autocomplete="new-password"
-                placeholder="Confirm password"
-            />
-        </div>
-
-        <div class="flex items-center justify-end">
-            <flux:button type="submit" variant="primary" class="w-full">
-                {{ __('Create account') }}
-            </flux:button>
+        <div class="flex items-center justify-between mt-6">
+            <div class="mr-1">
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox" />
+                    <span class="text-sm ml-2">{{ __('Email me about product news.') }}</span>
+                </label>
+            </div>
+            <x-button>
+                {{ __('Sign Up') }}
+            </x-button>
         </div>
     </form>
-
-    <div class="space-x-1 text-center text-sm text-zinc-600 dark:text-zinc-400">
-        Already have an account?
-        <x-text-link href="{{ route('login') }}">Log in</x-text-link>
+    <x-validation-errors class="mt-4" />
+    
+    <!-- Footer -->
+    <div class="pt-5 mt-6 border-t border-gray-100 dark:border-gray-700/60">
+        <div class="text-sm">
+            {{ __('Have an account?') }} <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="{{ route('login') }}">{{ __('Sign In') }}</a>
+        </div>
     </div>
-</div>
+</x-authentication-layout>

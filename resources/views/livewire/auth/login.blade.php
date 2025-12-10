@@ -1,116 +1,50 @@
-<?php
-
-use Illuminate\Auth\Events\Lockout;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
-use Livewire\Attributes\Layout;
-use Livewire\Attributes\Validate;
-use Livewire\Volt\Component;
-
-new #[Layout('components.layouts.auth')] class extends Component {
-    #[Validate('required|string|email')]
-    public string $email = '';
-
-    #[Validate('required|string')]
-    public string $password = '';
-
-    public bool $remember = false;
-
-    /**
-     * Handle an incoming authentication request.
-     */
-    public function login(): void
-    {
-        $this->validate();
-
-        $this->ensureIsNotRateLimited();
-
-        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
-        }
-
-        RateLimiter::clear($this->throttleKey());
-        Session::regenerate();
-
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
-    }
-
-    /**
-     * Ensure the authentication request is not rate limited.
-     */
-    protected function ensureIsNotRateLimited(): void
-    {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
-            return;
-        }
-
-        event(new Lockout(request()));
-
-        $seconds = RateLimiter::availableIn($this->throttleKey());
-
-        throw ValidationException::withMessages([
-            'email' => __('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
-        ]);
-    }
-
-    /**
-     * Get the authentication rate limiting throttle key.
-     */
-    protected function throttleKey(): string
-    {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
-    }
-}; ?>
-
-<div class="flex flex-col gap-6">
-    <x-auth-header title="Log in to your account" description="Enter your email and password below to log in" />
-
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
-
-    <form wire:submit="login" class="flex flex-col gap-6">
-        <!-- Email Address -->
-        <flux:input wire:model="email" label="{{ __('Email address') }}" type="email" name="email" required autofocus autocomplete="email" placeholder="email@example.com" />
-
-        <!-- Password -->
-        <div class="relative">
-            <flux:input
-                wire:model="password"
-                label="{{ __('Password') }}"
-                type="password"
-                name="password"
-                required
-                autocomplete="current-password"
-                placeholder="Password"
-            />
-
+<x-authentication-layout>
+    <h1 class="text-3xl text-gray-800 dark:text-gray-100 font-bold mb-6">{{ __('Welcome back!') }}</h1>
+    
+    @if (session('status'))
+        <div class="mb-4 font-medium text-sm text-green-600">
+            {{ session('status') }}
+        </div>
+    @endif
+    
+    <!-- Form -->
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
+        <div class="space-y-4">
+            <div>
+                <x-label for="email" value="{{ __('Email') }}" />
+                <x-input id="email" type="email" name="email" :value="old('email')" required autofocus />
+            </div>
+            <div>
+                <x-label for="password" value="{{ __('Password') }}" />
+                <x-input id="password" type="password" name="password" required autocomplete="current-password" />
+            </div>
+        </div>
+        <div class="flex items-center justify-between mt-6">
+            <div class="mr-1">
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox" name="remember" />
+                    <span class="text-sm ml-2">{{ __('Remember me') }}</span>
+                </label>
+            </div>
             @if (Route::has('password.request'))
-                <x-text-link class="absolute right-0 top-0" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </x-text-link>
+                <a class="text-sm underline hover:no-underline" href="{{ route('password.request') }}">
+                    {{ __('Forgot Password?') }}
+                </a>
             @endif
         </div>
-
-        <!-- Remember Me -->
-        <flux:checkbox wire:model="remember" label="{{ __('Remember me') }}" />
-
-        <div class="flex items-center justify-end">
-            <flux:button variant="primary" type="submit" class="w-full">{{ __('Log in') }}</flux:button>
+        <div class="mt-6">
+            <x-button class="w-full">
+                {{ __('Sign in') }}
+            </x-button>
         </div>
     </form>
-
-    <div class="space-x-1 text-center text-sm text-zinc-600 dark:text-zinc-400">
-        Don't have an account?
-        <x-text-link href="{{ route('register') }}">Sign up</x-text-link>
+    <x-validation-errors class="mt-4" />
+    
+    <!-- Footer -->
+    <div class="pt-5 mt-6 border-t border-gray-100 dark:border-gray-700/60">
+        <div class="text-sm">
+            {{ __("Don't you have an account?") }} <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="{{ route('register') }}">{{ __('Sign Up') }}</a>
+        </div>
     </div>
-</div>
+</x-authentication-layout>

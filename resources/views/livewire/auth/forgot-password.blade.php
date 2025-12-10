@@ -1,44 +1,37 @@
-<?php
-
-use Illuminate\Support\Facades\Password;
-use Livewire\Attributes\Layout;
-use Livewire\Volt\Component;
-
-new #[Layout('components.layouts.auth')] class extends Component {
-    public string $email = '';
-
-    /**
-     * Send a password reset link to the provided email address.
-     */
-    public function sendPasswordResetLink(): void
-    {
-        $this->validate([
-            'email' => ['required', 'string', 'email'],
-        ]);
-
-        Password::sendResetLink($this->only('email'));
-
-        session()->flash('status', __('A reset link will be sent if the account exists.'));
-    }
-}; ?>
-
-<div class="flex flex-col gap-6">
-    <x-auth-header title="Forgot password" description="Enter your email to receive a password reset link" />
-
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
-
-    <form wire:submit="sendPasswordResetLink" class="flex flex-col gap-6">
-        <!-- Email Address -->
-        <div class="grid gap-2">
-            <flux:input wire:model="email" label="{{ __('Email Address') }}" type="email" name="email" required autofocus placeholder="email@example.com" />
-        </div>
-
-        <flux:button variant="primary" type="submit" class="w-full">{{ __('Email password reset link') }}</flux:button>
-    </form>
-
-    <div class="space-x-1 text-center text-sm text-zinc-400">
-        Or, return to
-        <x-text-link href="{{ route('login') }}">log in</x-text-link>
+<x-authentication-layout>
+    <h1 class="text-3xl text-gray-800 dark:text-gray-100 font-bold mb-6">{{ __('Reset your Password') }}</h1>
+    
+    <div class="text-sm text-gray-500 dark:text-gray-400 mb-6">
+        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link.') }}
     </div>
-</div>
+    
+    @if (session('status'))
+        <div class="mb-4 font-medium text-sm text-green-600">
+            {{ session('status') }}
+        </div>
+    @endif
+    
+    <!-- Form -->
+    <form method="POST" action="{{ route('password.email') }}">
+        @csrf
+        <div class="space-y-4">
+            <div>
+                <x-label for="email" value="{{ __('Email') }}" />
+                <x-input id="email" type="email" name="email" :value="old('email')" required autofocus />
+            </div>
+        </div>
+        <div class="mt-6">
+            <x-button class="w-full">
+                {{ __('Send Reset Link') }}
+            </x-button>
+        </div>
+    </form>
+    <x-validation-errors class="mt-4" />
+    
+    <!-- Footer -->
+    <div class="pt-5 mt-6 border-t border-gray-100 dark:border-gray-700/60">
+        <div class="text-sm">
+            <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="{{ route('login') }}">{{ __('Back to Sign In') }}</a>
+        </div>
+    </div>
+</x-authentication-layout>

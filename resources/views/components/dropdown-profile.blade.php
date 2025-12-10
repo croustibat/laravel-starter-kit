@@ -9,7 +9,7 @@
         @click.prevent="open = !open"
         :aria-expanded="open"                        
     >
-        <img class="w-8 h-8 rounded-full" src="{{ Auth::user()->profile_photo_url }}" width="32" height="32" alt="{{ Auth::user()->name }}" />
+        <img class="w-8 h-8 rounded-full" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&color=7F9CF5&background=EBF4FF" width="32" height="32" alt="{{ Auth::user()->name }}" />
         <div class="flex items-center truncate">
             <span class="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white">{{ Auth::user()->name }}</span>
             <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500" viewBox="0 0 12 12">
@@ -36,7 +36,7 @@
         </div>
         <ul>
             <li>
-                <a class="font-medium text-sm text-violet-500 hover:text-violet-600 dark:hover:text-violet-400 flex items-center py-1 px-3" href="{{ route('profile.show') }}" @click="open = false" @focus="open = true" @focusout="open = false">Settings</a>
+                <a class="font-medium text-sm text-violet-500 hover:text-violet-600 dark:hover:text-violet-400 flex items-center py-1 px-3" href="{{ route('profile') }}" @click="open = false" @focus="open = true" @focusout="open = false">Settings</a>
             </li>
             <li>
                 <form method="POST" action="{{ route('logout') }}" x-data>

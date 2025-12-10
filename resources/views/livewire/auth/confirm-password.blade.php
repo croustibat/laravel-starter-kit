@@ -1,61 +1,24 @@
-<?php
-
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
-use Livewire\Attributes\Layout;
-use Livewire\Volt\Component;
-
-new #[Layout('components.layouts.auth')] class extends Component {
-    public string $password = '';
-
-    /**
-     * Confirm the current user's password.
-     */
-    public function confirmPassword(): void
-    {
-        $this->validate([
-            'password' => ['required', 'string'],
-        ]);
-
-        if (! Auth::guard('web')->validate([
-            'email' => Auth::user()->email,
-            'password' => $this->password,
-        ])) {
-            throw ValidationException::withMessages([
-                'password' => __('auth.password'),
-            ]);
-        }
-
-        session(['auth.password_confirmed_at' => time()]);
-
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
-    }
-}; ?>
-
-<div class="flex flex-col gap-6">
-    <x-auth-header
-        title="Confirm password"
-        description="This is a secure area of the application. Please confirm your password before continuing."
-    />
-
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
-
-    <form wire:submit="confirmPassword" class="flex flex-col gap-6">
-        <!-- Password -->
-        <div class="grid gap-2">
-            <flux:input
-                wire:model="password"
-                id="password"
-                label="{{ __('Password') }}"
-                type="password"
-                name="password"
-                required
-                autocomplete="new-password"
-                placeholder="Password"
-            />
+<x-authentication-layout>
+    <h1 class="text-3xl text-gray-800 dark:text-gray-100 font-bold mb-6">{{ __('Confirm Password') }}</h1>
+    
+    <div class="text-sm text-gray-500 dark:text-gray-400 mb-6">
+        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+    </div>
+    
+    <!-- Form -->
+    <form method="POST" action="{{ route('password.confirm') }}">
+        @csrf
+        <div class="space-y-4">
+            <div>
+                <x-label for="password" value="{{ __('Password') }}" />
+                <x-input id="password" type="password" name="password" required autocomplete="current-password" />
+            </div>
         </div>
-
-        <flux:button variant="primary" type="submit" class="w-full">{{ __('Confirm') }}</flux:button>
+        <div class="mt-6">
+            <x-button class="w-full">
+                {{ __('Confirm') }}
+            </x-button>
+        </div>
     </form>
-</div>
+    <x-validation-errors class="mt-4" />
+</x-authentication-layout>
