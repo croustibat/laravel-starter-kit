@@ -1,0 +1,25 @@
+@props(['{{ variablePlural }}', 'count'])
+
+<div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl relative">
+    <header class="px-5 py-4">
+        <h2 class="font-semibold text-gray-800 dark:text-gray-100">All {{ modelPlural }} <span class="text-gray-400 dark:text-gray-500 font-medium">{{ $count }}</span></h2>
+    </header>
+    <div>
+        <div class="overflow-x-auto">
+            <table class="table-auto w-full dark:text-gray-300 divide-y divide-gray-200 dark:divide-gray-700/60">
+                <thead class="text-xs uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/20 border-t border-gray-200 dark:border-gray-700/60">
+                    <tr>
+                        {{ tableHeaders }}
+                    </tr>
+                </thead>
+                <tbody class="text-sm font-medium divide-y divide-gray-200 dark:divide-gray-700/60">
+                    @foreach(${{ variablePlural }} as ${{ variableSingular }})
+                    <tr>
+                        {{ tableColumns }}
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,148 @@
+{
+  "ecommerce": {
+    "customers": {
+      "model": "Customer",
+      "table": "customers",
+      "title": "Customers",
+      "columns": [
+        {"name": "image", "type": "string", "nullable": true, "length": 2048, "label": "Customer"},
+        {"name": "name", "type": "string", "label": "Name"},
+        {"name": "email", "type": "string", "label": "Email"},
+        {"name": "location", "type": "string", "label": "Location"},
+        {"name": "orders", "type": "integer", "label": "Orders"},
+        {"name": "last_order", "type": "string", "label": "Last Order"},
+        {"name": "spent", "type": "string", "label": "Spent"},
+        {"name": "refunds", "type": "integer", "default": 0, "label": "Refunds"},
+        {"name": "fav", "type": "boolean", "default": false, "label": "Favorite"}
+      ],
+      "demo_data": [
+        {"image": "user-40-01.jpg", "name": "Patricia Semklo", "email": "patricia.semklo@app.com", "location": "🇬🇧 London, UK", "orders": 24, "last_order": "#123567", "spent": "$2,890.66", "refunds": 0, "fav": true},
+        {"image": "user-40-02.jpg", "name": "Dominik Lamakani", "email": "dominik.lamakani@gmail.com", "location": "🇩🇪 Dortmund, DE", "orders": 77, "last_order": "#779912", "spent": "$14,767.04", "refunds": 4, "fav": false},
+        {"image": "user-40-03.jpg", "name": "Ivan Mesaros", "email": "imivanmes@gmail.com", "location": "🇫🇷 Paris, FR", "orders": 44, "last_order": "#889924", "spent": "$4,996.00", "refunds": 1, "fav": true}
+      ]
+    },
+    "orders": {
+      "model": "Order",
+      "table": "orders",
+      "title": "Orders",
+      "columns": [
+        {"name": "image", "type": "string", "nullable": true, "length": 2048, "label": "Order"},
+        {"name": "order", "type": "string", "label": "Order"},
+        {"name": "date", "type": "string", "label": "Date"},
+        {"name": "customer", "type": "string", "label": "Customer"},
+        {"name": "total", "type": "string", "label": "Total"},
+        {"name": "status", "type": "string", "label": "Status"},
+        {"name": "items", "type": "integer", "label": "Items"},
+        {"name": "location", "type": "string", "label": "Location"},
+        {"name": "type", "type": "string", "label": "Type"},
+        {"name": "description", "type": "text", "nullable": true, "label": "Description"}
+      ],
+      "demo_data": [
+        {"image": "order-01.jpg", "order": "#123567", "date": "22/01/2024", "customer": "Patricia Semklo", "total": "$129.00", "status": "Refunded", "items": 1, "location": "🇬🇧 London, UK", "type": "Subscription", "description": "Excepteur sint occaecat cupidatat non proident"},
+        {"image": "order-02.jpg", "order": "#779912", "date": "22/01/2024", "customer": "Dominik Lamakani", "total": "$89.00", "status": "Approved", "items": 2, "location": "🇩🇪 Dortmund, DE", "type": "Subscription", "description": "Sed ut perspiciatis unde omnis iste natus error"}
+      ]
+    },
+    "invoices": {
+      "model": "Invoice",
+      "table": "invoices",
+      "title": "Invoices",
+      "columns": [
+        {"name": "invoice", "type": "string", "label": "Invoice"},
+        {"name": "total", "type": "string", "label": "Total"},
+        {"name": "status", "type": "string", "label": "Status"},
+        {"name": "customer", "type": "string", "label": "Customer"},
+        {"name": "issued_date", "type": "string", "label": "Issued Date"},
+        {"name": "paid_date", "type": "string", "nullable": true, "label": "Paid Date"},
+        {"name": "type", "type": "string", "label": "Type"}
+      ],
+      "demo_data": [
+        {"invoice": "#123567", "total": "$129.00", "status": "Paid", "customer": "Patricia Semklo", "issued_date": "22/01/2024", "paid_date": "23/01/2024", "type": "Subscription"},
+        {"invoice": "#779912", "total": "$89.00", "status": "Due", "customer": "Dominik Lamakani", "issued_date": "22/01/2024", "paid_date": null, "type": "Subscription"}
+      ]
+    }
+  },
+  "community": {
+    "members": {
+      "model": "Member",
+      "table": "members",
+      "title": "Members",
+      "columns": [
+        {"name": "image", "type": "string", "nullable": true, "length": 2048, "label": "Member"},
+        {"name": "name", "type": "string", "label": "Name"},
+        {"name": "link", "type": "string", "nullable": true, "label": "Link"},
+        {"name": "location", "type": "string", "label": "Location"},
+        {"name": "content", "type": "text", "label": "Content"}
+      ],
+      "demo_data": [
+        {"image": "user-40-01.jpg", "name": "Patricia Semklo", "link": "@patricksemklo", "location": "🇬🇧 London, UK", "content": "Fitness Fanatic, Design Enthusiast, Mentor, Meetup Organizer & PHP Lover."},
+        {"image": "user-40-02.jpg", "name": "Dominik Lamakani", "link": "@dominiklamakani", "location": "🇩🇪 Dortmund, DE", "content": "Full-Stack Developer, Open Source Contributor."}
+      ]
+    }
+  },
+  "finance": {
+    "transactions": {
+      "model": "Transaction",
+      "table": "transactions",
+      "title": "Transactions",
+      "columns": [
+        {"name": "image", "type": "string", "nullable": true, "length": 2048, "label": "Transaction"},
+        {"name": "name", "type": "string", "label": "Name"},
+        {"name": "status", "type": "string", "label": "Status"},
+        {"name": "amount", "type": "string", "label": "Amount"}
+      ],
+      "demo_data": [
+        {"image": "transaction-01.svg", "name": "Form Builder CP", "status": "Completed", "amount": "+$1,299.22"},
+        {"image": "transaction-02.svg", "name": "Imperial Hotel LTD", "status": "Completed", "amount": "+$1,029.77"}
+      ]
+    }
+  },
+  "job": {
+    "listings": {
+      "model": "Job",
+      "table": "jobs_listings",
+      "title": "Job Listings",
+      "columns": [
+        {"name": "role", "type": "string", "label": "Role"},
+        {"name": "company", "type": "string", "label": "Company"},
+        {"name": "type", "type": "string", "label": "Type"},
+        {"name": "date_posted", "type": "string", "label": "Posted"}
+      ],
+      "demo_data": [
+        {"role": "Senior Software Engineer Backend", "company": "Pagerduty", "type": "Full-Time", "date_posted": "22/01/2024"},
+        {"role": "Mid-Level Software Engineer", "company": "Dropbox", "type": "Full-Time", "date_posted": "22/01/2024"}
+      ]
+    }
+  },
+  "campaigns": {
+    "campaigns": {
+      "model": "Campaign",
+      "table": "campaigns",
+      "title": "Campaigns",
+      "columns": [
+        {"name": "name", "type": "string", "label": "Name"},
+        {"name": "status", "type": "string", "label": "Status"},
+        {"name": "date_from", "type": "string", "label": "From"},
+        {"name": "date_to", "type": "string", "label": "To"}
+      ],
+      "demo_data": [
+        {"name": "Q4 2024 Campaign", "status": "Active", "date_from": "01/10/2024", "date_to": "31/12/2024"},
+        {"name": "Summer Sale 2024", "status": "Completed", "date_from": "01/06/2024", "date_to": "31/08/2024"}
+      ]
+    },
+    "marketers": {
+      "model": "Marketer",
+      "table": "marketers",
+      "title": "Marketers",
+      "columns": [
+        {"name": "image", "type": "string", "nullable": true, "length": 2048, "label": "Marketer"},
+        {"name": "name", "type": "string", "label": "Name"},
+        {"name": "email", "type": "string", "label": "Email"},
+        {"name": "specialty", "type": "string", "label": "Specialty"}
+      ],
+      "demo_data": [
+        {"image": "user-40-01.jpg", "name": "Patricia Semklo", "email": "patricia.semklo@agency.com", "specialty": "Social Media"},
+        {"image": "user-40-02.jpg", "name": "Dominik Lamakani", "email": "dominik.l@agency.com", "specialty": "SEO"}
+      ]
+    }
+  }
+}

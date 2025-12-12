@@ -1,0 +1,20 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\{{ domain }}\{{ model }};
+use Illuminate\Database\Seeder;
+
+class {{ model }}Seeder extends Seeder
+{
+    protected $data = [
+        {{ demoData }}
+    ];
+
+    public function run(): void
+    {
+        foreach($this->data as $d) {
+            {{ model }}::create($d);
+        }
+    }
+}

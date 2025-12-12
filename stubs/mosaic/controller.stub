@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Http\Controllers\{{ domain }};
+
+use App\Http\Controllers\Controller;
+use App\Models\{{ domain }}\{{ model }};
+
+class {{ model }}Controller extends Controller
+{
+    public function index()
+    {
+        ${{ variablePlural }} = {{ model }}::simplePaginate(10);
+        ${{ variablePlural }}_count = {{ model }}::all()->count();
+
+        return view('pages/{{ domainLower }}/{{ entityLower }}', compact('{{ variablePlural }}', '{{ variablePlural }}_count'));
+    }
+}
