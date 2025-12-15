@@ -27,6 +27,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/settings/account', function () {
         return view('pages/settings/account');
     })->name('account');
+
+    // Profile alias (redirects to account settings)
+    Route::get('/profile', function () {
+        return redirect()->route('account');
+    })->name('profile');
     Route::get('/settings/notifications', function () {
         return view('pages/settings/notifications');
     })->name('notifications');
