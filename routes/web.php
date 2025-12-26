@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DigestController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Digests
+    Route::resource('digests', DigestController::class);
     Route::get('/dashboard/analytics', [DashboardController::class, 'analytics'])->name('analytics');
     Route::get('/dashboard/fintech', [DashboardController::class, 'fintech'])->name('fintech');
 
@@ -120,7 +124,7 @@ Route::middleware(['auth'])->group(function () {
         return view('pages/component/icons-page');
     })->name('icons-page');
 
-    Route::fallback(function() {
+    Route::fallback(function () {
         return view('pages/utility/404');
     });
 });
