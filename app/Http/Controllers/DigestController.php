@@ -40,12 +40,16 @@ class DigestController extends Controller
     {
         $this->authorize('view', $digest);
 
+        $digest->load(['items.tags', 'socialPosts']);
+
         return view('pages.digests.show', compact('digest'));
     }
 
     public function edit(Digest $digest): View
     {
         $this->authorize('update', $digest);
+
+        $digest->load(['items.tags']);
 
         return view('pages.digests.edit', compact('digest'));
     }
