@@ -1,139 +1,110 @@
 <div class="grow">
-
     <!-- Panel body -->
     <div class="p-6 space-y-6">
-        <div>
-            <h2 class="text-2xl text-gray-800 dark:text-gray-100 font-bold mb-4">Billing & Invoices</h2>
-            <div class="text-sm">This workspace’s Basic Plan is set to <strong class="font-medium">$34</strong> per month and will renew on <strong class="font-medium">July 9, 2024</strong>.</div>
-        </div>
-
-        <!-- Billing Information -->
+        <h2 class="text-2xl text-gray-800 dark:text-gray-100 font-bold mb-5">Billing & Invoices</h2>
+        <!-- Billing Info -->
         <section>
             <h3 class="text-xl leading-snug text-gray-800 dark:text-gray-100 font-bold mb-1">Billing Information</h3>
-            <ul>
-                <li class="md:flex md:justify-between md:items-center py-3 border-b border-gray-200 dark:border-gray-700/60">
-                    <!-- Left -->
-                    <div class="text-sm text-gray-800 dark:text-gray-100 font-medium">Payment Method</div>
-                    <!-- Right -->
-                    <div class="text-sm text-gray-600 dark:text-gray-400 ml-4">
-                        <span class="mr-3">Mastercard ending 9282</span>
-                        <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">Edit</a>
-                    </div>
-                </li>
-                <li class="md:flex md:justify-between md:items-center py-3 border-b border-gray-200 dark:border-gray-700/60">
-                    <!-- Left -->
-                    <div class="text-sm text-gray-800 dark:text-gray-100 font-medium">Billing Interval</div>
-                    <!-- Right -->
-                    <div class="text-sm text-gray-600 dark:text-gray-400 ml-4">
-                        <span class="mr-3">Annually</span>
-                        <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">Edit</a>
-                    </div>
-                </li>
-                <li class="md:flex md:justify-between md:items-center py-3 border-b border-gray-200 dark:border-gray-700/60">
-                    <!-- Left -->
-                    <div class="text-sm text-gray-800 dark:text-gray-100 font-medium">VAT/GST Number</div>
-                    <!-- Right -->
-                    <div class="text-sm text-gray-600 dark:text-gray-400 ml-4">
-                        <span class="mr-3">UK849700927</span>
-                        <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">Edit</a>
-                    </div>
-                </li>
-                <li class="md:flex md:justify-between md:items-center py-3 border-b border-gray-200 dark:border-gray-700/60">
-                    <!-- Left -->
-                    <div class="text-sm text-gray-800 dark:text-gray-100 font-medium">Your Address</div>
-                    <!-- Right -->
-                    <div class="text-sm text-gray-600 dark:text-gray-400 ml-4">
-                        <span class="mr-3">34 Savoy Street, London, UK, 24E8X</span>
-                        <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">Edit</a>
-                    </div>
-                </li>
-                <li class="md:flex md:justify-between md:items-center py-3 border-b border-gray-200 dark:border-gray-700/60">
-                    <!-- Left -->
-                    <div class="text-sm text-gray-800 dark:text-gray-100 font-medium">Billing Address</div>
-                    <!-- Right -->
-                    <div class="text-sm text-gray-600 dark:text-gray-400 ml-4">
-                        <span class="mr-3">hello@cruip.com</span>
-                        <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">Edit</a>
-                    </div>
-                </li>
-            </ul>
+            <div class="text-sm">Update your billing details and address.</div>
+            <div class="sm:flex sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-5">
+                <div class="sm:w-1/2">
+                    <label class="block text-sm font-medium mb-1" for="card">Card Number</label>
+                    <input id="card" class="form-input w-full" type="text" placeholder="**** **** **** 4242" />
+                </div>
+                <div class="sm:w-1/4">
+                    <label class="block text-sm font-medium mb-1" for="expiry">Expiry</label>
+                    <input id="expiry" class="form-input w-full" type="text" placeholder="MM/YY" />
+                </div>
+                <div class="sm:w-1/4">
+                    <label class="block text-sm font-medium mb-1" for="cvc">CVC</label>
+                    <input id="cvc" class="form-input w-full" type="text" placeholder="***" />
+                </div>
+            </div>
+            <div class="mt-5">
+                <button class="btn bg-violet-500 hover:bg-violet-600 text-white">Update Card</button>
+            </div>
         </section>
-
         <!-- Invoices -->
         <section>
             <h3 class="text-xl leading-snug text-gray-800 dark:text-gray-100 font-bold mb-1">Invoices</h3>
-            <!-- Table -->
-            <table class="table-auto w-full dark:text-gray-400">
-                <!-- Table header -->
-                <thead class="text-xs uppercase text-gray-400 dark:text-gray-500">
-                    <tr class="flex flex-wrap md:table-row md:flex-no-wrap">
-                        <th class="w-full block md:w-auto md:table-cell py-2">
-                            <div class="font-semibold text-left">Year</div>
-                        </th>
-                        <th class="w-full hidden md:w-auto md:table-cell py-2">
-                            <div class="font-semibold text-left">Plan</div>
-                        </th>
-                        <th class="w-full hidden md:w-auto md:table-cell py-2">
-                            <div class="font-semibold text-left">Amount</div>
-                        </th>
-                        <th class="w-full hidden md:w-auto md:table-cell py-2">
-                            <div class="font-semibold text-right"></div>
-                        </th>
-                    </tr>
-                </thead>
-                <!-- Table body -->
-                <tbody class="text-sm">
-                    <!-- Row -->
-                    <tr class="flex flex-wrap md:table-row md:flex-no-wrap border-b border-gray-200 dark:border-gray-700/60 py-2 md:py-0">
-                        <td class="w-full block md:w-auto md:table-cell py-0.5 md:py-2">
-                            <div class="text-left font-medium text-gray-800 dark:text-gray-100">2024</div>
-                        </td>
-                        <td class="w-full block md:w-auto md:table-cell py-0.5 md:py-2">
-                            <div class="text-left">Basic Plan - Annualy</div>
-                        </td>
-                        <td class="w-full block md:w-auto md:table-cell py-0.5 md:py-2">
-                            <div class="text-left font-medium">$349.00</div>
-                        </td>
-                        <td class="w-full block md:w-auto md:table-cell py-0.5 md:py-2">
-                            <div class="text-right flex items-center md:justify-end">
-                                <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">HTML</a>
-                                <span class="block w-px h-4 bg-gray-200 dark:bg-gray-700 mx-2" aria-hidden="true"></span>
-                                <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">PDF</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <!-- Row -->
-                    <tr class="flex flex-wrap md:table-row md:flex-no-wrap border-b border-gray-200 dark:border-gray-700/60 py-2 md:py-0">
-                        <td class="w-full block md:w-auto md:table-cell py-0.5 md:py-2">
-                            <div class="text-left font-medium text-gray-800 dark:text-gray-100">2024</div>
-                        </td>
-                        <td class="w-full block md:w-auto md:table-cell py-0.5 md:py-2">
-                            <div class="text-left">Basic Plan - Annualy</div>
-                        </td>
-                        <td class="w-full block md:w-auto md:table-cell py-0.5 md:py-2">
-                            <div class="text-left font-medium">$349.00</div>
-                        </td>
-                        <td class="w-full block md:w-auto md:table-cell py-0.5 md:py-2">
-                            <div class="text-right flex items-center md:justify-end">
-                                <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">HTML</a>
-                                <span class="block w-px h-4 bg-gray-200 dark:bg-gray-700 mx-2" aria-hidden="true"></span>
-                                <a class="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">PDF</a>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="text-sm mb-5">View and download your past invoices.</div>
+            <!-- Invoices Table -->
+            <div class="overflow-x-auto">
+                <table class="table-auto w-full">
+                    <thead class="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700 dark:bg-opacity-50 rounded-sm">
+                        <tr>
+                            <th class="p-2 whitespace-nowrap">
+                                <div class="font-semibold text-left">Invoice</div>
+                            </th>
+                            <th class="p-2 whitespace-nowrap">
+                                <div class="font-semibold text-left">Date</div>
+                            </th>
+                            <th class="p-2 whitespace-nowrap">
+                                <div class="font-semibold text-left">Amount</div>
+                            </th>
+                            <th class="p-2 whitespace-nowrap">
+                                <div class="font-semibold text-left">Status</div>
+                            </th>
+                            <th class="p-2 whitespace-nowrap">
+                                <div class="font-semibold text-right">Action</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-gray-100 dark:divide-gray-700/60">
+                        <tr>
+                            <td class="p-2 whitespace-nowrap">
+                                <div class="text-gray-800 dark:text-gray-100">#INV-2024001</div>
+                            </td>
+                            <td class="p-2 whitespace-nowrap">
+                                <div>Jan 01, 2024</div>
+                            </td>
+                            <td class="p-2 whitespace-nowrap">
+                                <div class="text-left font-medium text-green-500">$49.00</div>
+                            </td>
+                            <td class="p-2 whitespace-nowrap">
+                                <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400">Paid</div>
+                            </td>
+                            <td class="p-2 whitespace-nowrap text-right">
+                                <a class="text-violet-500 hover:text-violet-600 font-medium" href="#0">Download</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 whitespace-nowrap">
+                                <div class="text-gray-800 dark:text-gray-100">#INV-2023012</div>
+                            </td>
+                            <td class="p-2 whitespace-nowrap">
+                                <div>Dec 01, 2023</div>
+                            </td>
+                            <td class="p-2 whitespace-nowrap">
+                                <div class="text-left font-medium text-green-500">$49.00</div>
+                            </td>
+                            <td class="p-2 whitespace-nowrap">
+                                <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400">Paid</div>
+                            </td>
+                            <td class="p-2 whitespace-nowrap text-right">
+                                <a class="text-violet-500 hover:text-violet-600 font-medium" href="#0">Download</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-2 whitespace-nowrap">
+                                <div class="text-gray-800 dark:text-gray-100">#INV-2023011</div>
+                            </td>
+                            <td class="p-2 whitespace-nowrap">
+                                <div>Nov 01, 2023</div>
+                            </td>
+                            <td class="p-2 whitespace-nowrap">
+                                <div class="text-left font-medium text-green-500">$49.00</div>
+                            </td>
+                            <td class="p-2 whitespace-nowrap">
+                                <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-500/20 text-green-600 dark:text-green-400">Paid</div>
+                            </td>
+                            <td class="p-2 whitespace-nowrap text-right">
+                                <a class="text-violet-500 hover:text-violet-600 font-medium" href="#0">Download</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </div>
-
-    <!-- Panel footer -->
-    <footer>
-        <div class="flex flex-col px-6 py-5 border-t border-gray-200 dark:border-gray-700/60">
-            <div class="flex self-end">
-                <button class="btn dark:bg-gray-800 border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-gray-800 dark:text-gray-300">Cancel</button>
-                <button class="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white ml-3">Save Changes</button>
-            </div>
-        </div>
-    </footer>
-
 </div>
