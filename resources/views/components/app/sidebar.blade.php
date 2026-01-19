@@ -92,6 +92,28 @@
                             </div>
                         </a>
                     </li>
+                    <!-- Items -->
+                    <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r @if(in_array(Request::segment(1), ['items'])){{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }}@endif">
+                        <a class="block text-gray-800 dark:text-gray-100 truncate transition @if(!in_array(Request::segment(1), ['items'])){{ 'hover:text-gray-900 dark:hover:text-white' }}@endif" href="{{ route('items.index') }}">
+                            <div class="flex items-center">
+                                <svg class="shrink-0 fill-current @if(in_array(Request::segment(1), ['items'])){{ 'text-violet-500' }}@else{{ 'text-gray-400 dark:text-gray-500' }}@endif" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                    <path d="M13.19 3.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" stroke-width="1.5" stroke="currentColor" fill="none" />
+                                </svg>
+                                <span class="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Items</span>
+                            </div>
+                        </a>
+                    </li>
+                    <!-- Tags -->
+                    <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r @if(in_array(Request::segment(1), ['tags'])){{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }}@endif">
+                        <a class="block text-gray-800 dark:text-gray-100 truncate transition @if(!in_array(Request::segment(1), ['tags'])){{ 'hover:text-gray-900 dark:hover:text-white' }}@endif" href="{{ route('tags.index') }}">
+                            <div class="flex items-center">
+                                <svg class="shrink-0 fill-current @if(in_array(Request::segment(1), ['tags'])){{ 'text-violet-500' }}@else{{ 'text-gray-400 dark:text-gray-500' }}@endif" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                    <path d="M11.136 3.024a4 4 0 00-5.656 0L1.696 6.808a4 4 0 000 5.656l1.84 1.84a4 4 0 005.656 0l3.784-3.784a4 4 0 000-5.656l-1.84-1.84zM9.722 4.438a2 2 0 012.828 0l1.84 1.84a2 2 0 010 2.828l-3.784 3.784a2 2 0 01-2.828 0l-1.84-1.84a2 2 0 010-2.828l3.784-3.784zm-3.67 4.256a1 1 0 111.414 1.414 1 1 0 01-1.414-1.414z" />
+                                </svg>
+                                <span class="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Tags</span>
+                            </div>
+                        </a>
+                    </li>
                     <!-- Settings -->
                     <li class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r @if(in_array(Request::segment(1), ['settings'])){{ 'from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]' }}@endif" x-data="{ open: {{ in_array(Request::segment(1), ['settings']) ? 1 : 0 }} }">
                         <a class="block text-gray-800 dark:text-gray-100 truncate transition @if(!in_array(Request::segment(1), ['settings'])){{ 'hover:text-gray-900 dark:hover:text-white' }}@endif" href="#0" @click.prevent="open = !open; sidebarExpanded = true">

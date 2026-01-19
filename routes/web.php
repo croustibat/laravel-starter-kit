@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DigestController;
+use App\Http\Controllers\PublicDigestController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', 'login');
+// Landing page (public)
+Route::get('/', function () {
+    return view('pages.landing');
+})->name('landing');
+
+// Public digest page
+Route::get('/d/{digest:slug}', [PublicDigestController::class, 'show'])->name('public.digest.show');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -24,6 +32,15 @@ Route::middleware(['auth'])->group(function () {
 
     // Digests
     Route::resource('digests', DigestController::class);
+    Route::post('/digests/{digest}/publish', [DigestController::class, 'publish'])->name('digests.publish');
+    Route::post('/digests/{digest}/unpublish', [DigestController::class, 'unpublish'])->name('digests.unpublish');
+
+    // Items
+    Route::resource('items', \App\Http\Controllers\ItemController::class);
+
+    // Tags
+    Route::resource('tags', TagController::class)->except(['create', 'show', 'edit']);
+
     Route::get('/dashboard/analytics', [DashboardController::class, 'analytics'])->name('analytics');
     Route::get('/dashboard/fintech', [DashboardController::class, 'fintech'])->name('fintech');
 
