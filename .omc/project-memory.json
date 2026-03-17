@@ -1,0 +1,380 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1773757838814,
+  "projectRoot": "/Users/croustibat/.polyscope/clones/b25a2ce3/quiet-bee",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "PHP",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "composer.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "esbuild",
+        "version": "0.24.2",
+        "category": "build"
+      },
+      {
+        "name": "vite",
+        "version": "6.0.11",
+        "category": "build"
+      }
+    ],
+    "packageManager": "composer",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": "npm run dev",
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "app",
+      "public",
+      "tests"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "app": {
+      "path": "app",
+      "purpose": "Application code",
+      "fileCount": 0,
+      "lastAccessed": 1773757838793,
+      "keyFiles": []
+    },
+    "bootstrap": {
+      "path": "bootstrap",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1773757838794,
+      "keyFiles": [
+        "app.php",
+        "providers.php"
+      ]
+    },
+    "config": {
+      "path": "config",
+      "purpose": "Configuration files",
+      "fileCount": 11,
+      "lastAccessed": 1773757838796,
+      "keyFiles": [
+        "app.php",
+        "auth.php",
+        "cache.php",
+        "database.php",
+        "filesystems.php"
+      ]
+    },
+    "database": {
+      "path": "database",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1773757838796,
+      "keyFiles": [
+        "CLAUDE.md",
+        "database.sqlite"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 4,
+      "lastAccessed": 1773757838796,
+      "keyFiles": [
+        "favicon.ico",
+        "index.php",
+        "robots.txt"
+      ]
+    },
+    "resources": {
+      "path": "resources",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1773757838796,
+      "keyFiles": []
+    },
+    "routes": {
+      "path": "routes",
+      "purpose": "Route handlers",
+      "fileCount": 4,
+      "lastAccessed": 1773757838796,
+      "keyFiles": [
+        "CLAUDE.md",
+        "api.php",
+        "console.php",
+        "web.php"
+      ]
+    },
+    "storage": {
+      "path": "storage",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1773757838796,
+      "keyFiles": []
+    },
+    "stubs": {
+      "path": "stubs",
+      "purpose": "Stub implementations",
+      "fileCount": 0,
+      "lastAccessed": 1773757838797,
+      "keyFiles": []
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 3,
+      "lastAccessed": 1773757838797,
+      "keyFiles": [
+        "CLAUDE.md",
+        "Pest.php",
+        "TestCase.php"
+      ]
+    },
+    "vendor": {
+      "path": "vendor",
+      "purpose": "Third-party code",
+      "fileCount": 1,
+      "lastAccessed": 1773757838797,
+      "keyFiles": [
+        "autoload.php"
+      ]
+    },
+    "app/Models": {
+      "path": "app/Models",
+      "purpose": "Data models",
+      "fileCount": 6,
+      "lastAccessed": 1773757838797,
+      "keyFiles": [
+        "DataFeed.php",
+        "Digest.php",
+        "Item.php"
+      ]
+    },
+    "app/Services": {
+      "path": "app/Services",
+      "purpose": "Business logic services",
+      "fileCount": 3,
+      "lastAccessed": 1773757838798,
+      "keyFiles": [
+        "ModuleGenerator.php",
+        "README.md",
+        "UrlMetadataExtractor.php"
+      ]
+    },
+    "database/migrations": {
+      "path": "database/migrations",
+      "purpose": "Database migrations",
+      "fileCount": 10,
+      "lastAccessed": 1773757838798,
+      "keyFiles": [
+        "0001_01_01_000000_create_users_table.php",
+        "0001_01_01_000001_create_cache_table.php",
+        "0001_01_01_000002_create_jobs_table.php"
+      ]
+    },
+    "public/build": {
+      "path": "public/build",
+      "purpose": "Build output",
+      "fileCount": 1,
+      "lastAccessed": 1773757838798,
+      "keyFiles": [
+        "manifest.json"
+      ]
+    },
+    "resources/views": {
+      "path": "resources/views",
+      "purpose": "View templates",
+      "fileCount": 2,
+      "lastAccessed": 1773757838798,
+      "keyFiles": [
+        "dashboard.blade.php",
+        "welcome.blade.php"
+      ]
+    },
+    "storage/app": {
+      "path": "storage/app",
+      "purpose": "Application code",
+      "fileCount": 1,
+      "lastAccessed": 1773757838798,
+      "keyFiles": []
+    },
+    "vendor/bin": {
+      "path": "vendor/bin",
+      "purpose": "Executable scripts",
+      "fileCount": 10,
+      "lastAccessed": 1773757838799,
+      "keyFiles": [
+        "blade-icons-generate",
+        "carbon",
+        "patch-type-declarations"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "resources/views/components/app/sidebar.blade.php",
+      "accessCount": 3,
+      "lastAccessed": 1773758469092,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/components/layouts/app.blade.php",
+      "accessCount": 3,
+      "lastAccessed": 1773758580870,
+      "type": "file"
+    },
+    {
+      "path": "bootstrap/providers.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758079604,
+      "type": "file"
+    },
+    {
+      "path": "composer.json",
+      "accessCount": 2,
+      "lastAccessed": 1773758104114,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/components/layouts/app/sidebar.blade.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758125386,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/components/layouts/app/header.blade.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758126379,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/livewire/settings/profile.blade.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758139099,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/livewire/settings/password.blade.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758139427,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/livewire/settings/delete-user-form.blade.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758139650,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/livewire/settings/appearance.blade.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758140146,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/components/settings/layout.blade.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758141045,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/partials/settings-heading.blade.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758141752,
+      "type": "file"
+    },
+    {
+      "path": "app/Http/Controllers/DashboardController.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758308700,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/pages/dashboard/dashboard.blade.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758333047,
+      "type": "file"
+    },
+    {
+      "path": "database/seeders/DatabaseSeeder.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758344106,
+      "type": "file"
+    },
+    {
+      "path": "routes/web.php",
+      "accessCount": 2,
+      "lastAccessed": 1773758487530,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/flux/navlist/group.blade.php",
+      "accessCount": 1,
+      "lastAccessed": 1773758012613,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/layouts/app.blade.php",
+      "accessCount": 1,
+      "lastAccessed": 1773758173610,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/pages/settings/account.blade.php",
+      "accessCount": 1,
+      "lastAccessed": 1773758173626,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/dashboard.blade.php",
+      "accessCount": 1,
+      "lastAccessed": 1773758538230,
+      "type": "file"
+    },
+    {
+      "path": "resources/views/livewire/digests/item-manager.blade.php",
+      "accessCount": 1,
+      "lastAccessed": 1773758538613,
+      "type": "file"
+    },
+    {
+      "path": "tests/Feature/ItemManagerTest.php",
+      "accessCount": 1,
+      "lastAccessed": 1773758552698,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

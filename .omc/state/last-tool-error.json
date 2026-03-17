@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"php artisan test 2>&1\",\"description\":\"Run full test suite\"}",
+  "error": "Exit code 2\n\n   PASS  Tests\\Unit\\DigestModelTest\n  ✓ digest belongs to user                                               0.10s  \n  ✓ digest has many items through pivot                                  0.01s  \n  ✓ digest items are ordered by pivot order                              0.01s  \n  ✓ digest items pivot includes order\n  ✓ digest has many social posts                                         0.01s  \n  ✓ digest fillable attributes\n  ✓ digest casts published at to datetime                 ...",
+  "timestamp": "2026-03-17T14:41:54.381Z",
+  "retry_count": 1
+}
