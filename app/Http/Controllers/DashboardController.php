@@ -3,15 +3,44 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\DataFeed;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request): View
     {
-        $dataFeed = new DataFeed();
+        $user = $request->user();
 
-        return view('pages/dashboard/dashboard', compact('dataFeed'));
+        $stats = [
+            'items' => $user->items()->count(),
+            'digests' => $user->digests()->count(),
+            'drafts' => $user->digests()->where('status', 'draft')->count(),
+            'published' => $user->digests()->where('status', 'published')->count(),
+        ];
+
+        $activeDigest = $user->digests()
+            ->withCount('items')
+            ->where('status', 'draft')
+            ->latest('updated_at')
+            ->first();
+
+        $recentDigests = $user->digests()
+            ->withCount('items')
+            ->latest('updated_at')
+            ->limit(3)
+            ->get();
+
+        $recentItems = $user->items()
+            ->latest()
+            ->limit(4)
+            ->get();
+
+        return view('pages/dashboard/dashboard', compact(
+            'activeDigest',
+            'recentDigests',
+            'recentItems',
+            'stats',
+        ));
     }
 
     /**

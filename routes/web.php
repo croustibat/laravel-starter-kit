@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BriefController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DigestController;
 use App\Http\Controllers\PublicDigestController;
@@ -30,12 +31,16 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Briefs
+    Route::get('/briefs', [BriefController::class, 'index'])->name('briefs.index');
+
     // Digests
     Route::resource('digests', DigestController::class);
     Route::post('/digests/{digest}/publish', [DigestController::class, 'publish'])->name('digests.publish');
     Route::post('/digests/{digest}/unpublish', [DigestController::class, 'unpublish'])->name('digests.unpublish');
 
     // Items
+    Route::post('/items/{item}/start-digest', [\App\Http\Controllers\ItemController::class, 'startDigest'])->name('items.start-digest');
     Route::resource('items', \App\Http\Controllers\ItemController::class);
 
     // Tags

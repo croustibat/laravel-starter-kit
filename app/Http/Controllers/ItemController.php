@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreItemRequest;
+use App\Http\Requests\UpdateItemRequest;
+use App\Models\Digest;
 use App\Models\Item;
+use App\Services\UrlMetadataExtractor;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -30,18 +35,30 @@ class ItemController extends Controller
         return view('pages.items.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreItemRequest $request, UrlMetadataExtractor $extractor): RedirectResponse
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'url' => 'required|url|max:2048',
-            'description' => 'nullable|string',
-            'image_url' => 'nullable|url|max:2048',
-        ]);
+        $validated = $request->validated();
+        $metadata = [];
 
-        auth()->user()->items()->create($validated);
+        if (blank($validated['title'] ?? null)) {
+            $metadata = $extractor->extract($validated['url']);
+        }
 
-        return redirect()->route('items.index')->with('success', 'Item created successfully.');
+        $validated['title'] = filled($validated['title'] ?? null)
+            ? $validated['title']
+            : ($metadata['title'] ?? $this->fallbackTitleFromUrl($validated['url']));
+
+        $validated['description'] = filled($validated['description'] ?? null)
+            ? $validated['description']
+            : ($metadata['description'] ?? null);
+
+        $validated['image_url'] = filled($validated['image_url'] ?? null)
+            ? $validated['image_url']
+            : ($metadata['image_url'] ?? null);
+
+        $item = $request->user()->items()->create($validated);
+
+        return redirect()->route('items.edit', $item)->with('success', 'Source captured. Add your angle before using it in a digest.');
     }
 
     public function edit(Item $item): View
@@ -53,28 +70,45 @@ class ItemController extends Controller
         return view('pages.items.edit', compact('item'));
     }
 
-    public function update(Request $request, Item $item)
+    public function update(UpdateItemRequest $request, Item $item): RedirectResponse
     {
         $this->authorize('update', $item);
 
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'url' => 'required|url|max:2048',
-            'description' => 'nullable|string',
-            'image_url' => 'nullable|url|max:2048',
-        ]);
-
-        $item->update($validated);
+        $item->update($request->validated());
 
         return redirect()->route('items.index')->with('success', 'Item updated successfully.');
     }
 
-    public function destroy(Item $item)
+    public function startDigest(Item $item): RedirectResponse
+    {
+        $this->authorize('update', $item);
+
+        $digestTitle = "Édition autour de {$item->title}";
+
+        $digest = $item->user->digests()->create([
+            'title' => $digestTitle,
+            'slug' => Digest::uniqueSlugForTitle($digestTitle),
+            'status' => 'draft',
+        ]);
+
+        $digest->items()->attach($item, ['order' => 0]);
+
+        return redirect()->route('digests.edit', $digest)->with('success', 'Digest started with your first source.');
+    }
+
+    public function destroy(Item $item): RedirectResponse
     {
         $this->authorize('delete', $item);
 
         $item->delete();
 
         return redirect()->route('items.index')->with('success', 'Item deleted successfully.');
+    }
+
+    private function fallbackTitleFromUrl(string $url): string
+    {
+        $host = parse_url($url, PHP_URL_HOST);
+
+        return $host ?: $url;
     }
 }

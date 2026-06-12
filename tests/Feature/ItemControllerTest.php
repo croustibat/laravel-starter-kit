@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Models\Digest;
 use App\Models\Item;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class ItemControllerTest extends TestCase
@@ -27,6 +29,8 @@ class ItemControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertViewIs('pages.items.index');
+        $response->assertSee('Sources');
+        $response->assertSee('Capturer un lien');
     }
 
     public function test_users_only_see_their_own_items_on_index(): void
@@ -98,6 +102,8 @@ class ItemControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertViewIs('pages.items.create');
+        $response->assertSee('Collez une URL');
+        $response->assertSee('Capturer la source');
     }
 
     public function test_guests_cannot_store_item(): void
@@ -120,7 +126,9 @@ class ItemControllerTest extends TestCase
             'description' => 'Great resource',
         ]);
 
-        $response->assertRedirect(route('items.index'));
+        $item = Item::where('title', 'My New Item')->firstOrFail();
+
+        $response->assertRedirect(route('items.edit', $item));
         $response->assertSessionHas('success');
 
         $this->assertDatabaseHas('items', [
@@ -131,16 +139,60 @@ class ItemControllerTest extends TestCase
         ]);
     }
 
-    public function test_item_store_requires_title(): void
+    public function test_item_store_can_capture_url_only_with_metadata(): void
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->post(route('items.store'), [
-            'title' => '',
-            'url' => 'https://example.com',
+        Http::fake([
+            'example.com/*' => Http::response('
+                <html>
+                    <head>
+                        <meta property="og:title" content="Extracted Article">
+                        <meta property="og:description" content="Extracted summary">
+                        <meta property="og:image" content="https://example.com/image.jpg">
+                    </head>
+                </html>
+            ', 200),
         ]);
 
-        $response->assertSessionHasErrors('title');
+        $response = $this->actingAs($user)->post(route('items.store'), [
+            'url' => 'https://example.com/article',
+        ]);
+
+        $item = Item::where('title', 'Extracted Article')->firstOrFail();
+
+        $response->assertRedirect(route('items.edit', $item));
+
+        $this->assertDatabaseHas('items', [
+            'user_id' => $user->id,
+            'title' => 'Extracted Article',
+            'url' => 'https://example.com/article',
+            'description' => 'Extracted summary',
+            'image_url' => 'https://example.com/image.jpg',
+        ]);
+    }
+
+    public function test_item_store_falls_back_to_url_host_when_metadata_is_missing(): void
+    {
+        $user = User::factory()->create();
+
+        Http::fake([
+            'example.com/*' => Http::response('<html><head></head><body></body></html>', 200),
+        ]);
+
+        $response = $this->actingAs($user)->post(route('items.store'), [
+            'url' => 'https://example.com/article',
+        ]);
+
+        $item = Item::where('title', 'example.com')->firstOrFail();
+
+        $response->assertRedirect(route('items.edit', $item));
+
+        $this->assertDatabaseHas('items', [
+            'user_id' => $user->id,
+            'title' => 'example.com',
+            'url' => 'https://example.com/article',
+        ]);
     }
 
     public function test_item_store_requires_url(): void
@@ -176,7 +228,9 @@ class ItemControllerTest extends TestCase
             'url' => 'https://example.com',
         ]);
 
-        $response->assertRedirect(route('items.index'));
+        $item = Item::where('title', 'My Item')->firstOrFail();
+
+        $response->assertRedirect(route('items.edit', $item));
         $this->assertDatabaseHas('items', [
             'user_id' => $user->id,
             'title' => 'My Item',
@@ -194,7 +248,9 @@ class ItemControllerTest extends TestCase
             'url' => 'https://example.com',
         ]);
 
-        $response->assertRedirect(route('items.index'));
+        $item = Item::where('title', 'My Item')->firstOrFail();
+
+        $response->assertRedirect(route('items.edit', $item));
         $this->assertDatabaseHas('items', [
             'user_id' => $user->id,
             'title' => 'My Item',
@@ -258,6 +314,54 @@ class ItemControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Laravel');
+    }
+
+    public function test_guests_cannot_start_digest_from_item(): void
+    {
+        $item = Item::factory()->create();
+
+        $response = $this->post(route('items.start-digest', $item));
+
+        $response->assertRedirect(route('login'));
+    }
+
+    public function test_users_can_start_digest_from_their_item(): void
+    {
+        $user = User::factory()->create();
+        $item = Item::factory()->for($user)->create([
+            'title' => 'Deep Laravel Notes',
+        ]);
+
+        $response = $this->actingAs($user)->post(route('items.start-digest', $item));
+
+        $digest = Digest::where('title', 'Édition autour de Deep Laravel Notes')->firstOrFail();
+
+        $response->assertRedirect(route('digests.edit', $digest));
+        $response->assertSessionHas('success');
+
+        $this->assertDatabaseHas('digests', [
+            'id' => $digest->id,
+            'user_id' => $user->id,
+            'status' => 'draft',
+        ]);
+
+        $this->assertDatabaseHas('digest_item', [
+            'digest_id' => $digest->id,
+            'item_id' => $item->id,
+            'order' => 0,
+        ]);
+    }
+
+    public function test_users_cannot_start_digest_from_other_users_item(): void
+    {
+        $user = User::factory()->create();
+        $otherUser = User::factory()->create();
+        $item = Item::factory()->for($otherUser)->create();
+
+        $response = $this->actingAs($user)->post(route('items.start-digest', $item));
+
+        $response->assertStatus(403);
+        $this->assertDatabaseCount('digests', 0);
     }
 
     public function test_guests_cannot_update_item(): void

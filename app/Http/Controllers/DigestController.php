@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Digest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class DigestController extends Controller
@@ -41,7 +40,7 @@ class DigestController extends Controller
 
         auth()->user()->digests()->create([
             'title' => $validated['title'],
-            'slug' => Str::slug($validated['title']),
+            'slug' => Digest::uniqueSlugForTitle($validated['title']),
             'status' => 'draft',
         ]);
 
@@ -77,7 +76,7 @@ class DigestController extends Controller
 
         $digest->update([
             'title' => $validated['title'],
-            'slug' => Str::slug($validated['title']),
+            'slug' => Digest::uniqueSlugForTitle($validated['title'], $digest),
             'status' => $validated['status'],
             'published_at' => $validated['status'] === 'published' ? now() : null,
         ]);

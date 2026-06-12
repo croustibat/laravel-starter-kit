@@ -14,6 +14,31 @@
             <p class="text-sm text-gray-500 dark:text-gray-400">Update your bookmark details</p>
         </div>
 
+        @if(session('success'))
+            <div class="mb-6 p-4 bg-green-100 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg flex items-center gap-3">
+                <svg class="w-5 h-5 text-green-600 dark:text-green-400 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <p class="text-sm text-green-700 dark:text-green-400">{{ session('success') }}</p>
+            </div>
+        @endif
+
+        <div class="mb-6 bg-violet-50 dark:bg-violet-900/20 border border-violet-100 dark:border-violet-800/40 rounded-xl p-5">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wide text-violet-600 dark:text-violet-400 mb-2">Prochaine étape</p>
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100">Transformez cette source en première édition.</h2>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Paperboy créera un digest brouillon avec cette source en première position, prêt à compléter.</p>
+                </div>
+                <form method="POST" action="{{ route('items.start-digest', $item) }}" class="shrink-0">
+                    @csrf
+                    <button type="submit" class="btn bg-violet-500 text-white hover:bg-violet-600">
+                        Démarrer un digest
+                    </button>
+                </form>
+            </div>
+        </div>
+
         <!-- Form -->
         <div class="bg-white dark:bg-gray-800 shadow-xs rounded-xl">
             <div class="p-6">

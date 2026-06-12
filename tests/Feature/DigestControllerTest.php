@@ -27,6 +27,8 @@ class DigestControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertViewIs('pages.digests.index');
+        $response->assertSee('Digests');
+        $response->assertSee('Nouveau digest');
     }
 
     public function test_users_only_see_their_own_digests_on_index(): void
@@ -86,6 +88,28 @@ class DigestControllerTest extends TestCase
             'title' => 'My New Digest',
             'slug' => 'my-new-digest',
             'status' => 'draft',
+        ]);
+    }
+
+    public function test_digest_store_generates_unique_slug_for_duplicate_titles(): void
+    {
+        $user = User::factory()->create();
+
+        Digest::factory()->for($user)->create([
+            'title' => 'Weekly Notes',
+            'slug' => 'weekly-notes',
+        ]);
+
+        $response = $this->actingAs($user)->post(route('digests.store'), [
+            'title' => 'Weekly Notes',
+        ]);
+
+        $response->assertRedirect(route('digests.index'));
+
+        $this->assertDatabaseHas('digests', [
+            'user_id' => $user->id,
+            'title' => 'Weekly Notes',
+            'slug' => 'weekly-notes-2',
         ]);
     }
 

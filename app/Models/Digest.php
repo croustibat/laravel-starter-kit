@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Digest extends Model
 {
@@ -41,5 +42,22 @@ class Digest extends Model
     public function socialPosts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(SocialPost::class);
+    }
+
+    public static function uniqueSlugForTitle(string $title, ?self $except = null): string
+    {
+        $baseSlug = Str::slug($title) ?: 'digest';
+        $slug = $baseSlug;
+        $suffix = 2;
+
+        while (self::query()
+            ->where('slug', $slug)
+            ->when($except, fn ($query) => $query->whereKeyNot($except->getKey()))
+            ->exists()) {
+            $slug = "{$baseSlug}-{$suffix}";
+            $suffix++;
+        }
+
+        return $slug;
     }
 }
