@@ -26,6 +26,9 @@ jobs:
           tools: composer:v2
           coverage: xdebug
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -48,7 +51,7 @@ jobs:
         run: php artisan key:generate
 
       - name: Build Assets
-        run: npm run build
+        run: pnpm run build
 
       - name: Run Tests
         run: ./vendor/bin/phpunit
